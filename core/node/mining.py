@@ -5,7 +5,7 @@ from core.node.controllers.mining_execute import ExecuteMining
 
 class Mining:
     def __init__(self):
-        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "mempool", "mempool.json")
+        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "mempool", "mempool.json")
 
     def index(self):
         with open(self.MEMPOOL_FILE, "r") as f:

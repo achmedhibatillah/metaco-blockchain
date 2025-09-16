@@ -4,16 +4,17 @@ from core.node.controllers.block_management import BlockManagement
 
 class StateManagement:
     def __init__(self):
-        self.STATE_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "state")
-        self.STATE_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "state", "state.json")
-        self.GENESIS_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "genesis", "genesis.json")
+        self.STATE_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "..", "state")
+        self.STATE_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "..", "state", "state.json")
+        self.GENESIS_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "..", "genesis", "genesis.json")
 
         block_management = BlockManagement()
         self.BLOCKCHAIN = block_management.get_blockchain()
         self.STATE = self.state_load()
         if not self.STATE and self.BLOCKCHAIN:
-            self.rebuild_state_from_blockchain()
+            self.state_rebuild()
 
+    @staticmethod
     def _normalize(addr):
         return str(addr).lower().strip() if addr else None
     
@@ -21,11 +22,11 @@ class StateManagement:
         if os.path.exists(self.STATE_FILE):
             with open(self.STATE_FILE, "r") as f:
                 raw = json.load(f)
-            return [{"adr": self._normalize(x["adr"]), "stt": self._normalize(x["stt"])} for x in raw]
+            return [{"adr": self._normalize(x["adr"]), "stt": int(x["stt"])} for x in raw]
         elif os.path.exists(self.GENESIS_FILE):
             with open(self.GENESIS_FILE, "r") as f:
                 genesis = json.load(f)
-            norm = [{"adr": self._normalize(x["adr"]), "stt": self._normalize(x["stt"])} for x in genesis]
+            norm = [{"adr": self._normalize(x["adr"]), "stt": int(x["stt"])} for x in genesis]
             os.makedirs(self.STATE_DIR, exist_ok=True)
             with open(self.STATE_FILE, "w") as f:
                 json.dump(norm,f)

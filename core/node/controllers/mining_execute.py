@@ -7,7 +7,7 @@ from core.node.controllers.block_management import BlockManagement
 
 class ExecuteMining:
     def __init__(self):
-        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "mempool", "mempool.json")
+        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "..", "mempool", "mempool.json")
 
     def mining(self):
         mempool_management = MempoolManagement()

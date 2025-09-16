@@ -3,7 +3,7 @@ import json
 
 class MempoolManagement:
     def __init__(self):
-        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "mempool", "mempool.json")
+        self.MEMPOOL_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "..", "mempool", "mempool.json")
         self.MEMPOOL = []
 
     def mempool_load(self):

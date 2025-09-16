@@ -5,7 +5,7 @@ import hashlib
 class BlockManagement:
 
     def __init__(self):
-        self.BLOCK_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "blocks")
+        self.BLOCK_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "..", "blocks")
         os.makedirs(self.BLOCK_DIR, exist_ok=True)
         self.BLOCKCHAIN = self.block_load()
 

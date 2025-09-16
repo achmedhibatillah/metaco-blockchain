@@ -55,5 +55,20 @@ class StateManagement:
         with open(self.STATE_FILE, "w") as f:
             json.dump(self.STATE, f)
 
-    def state_update(self):
-        
+    def state_update(self, block):
+        state = self.get_state_disc()
+        for tx in block.get("tx", []):
+            i = self._normalize(tx.get("i"))
+            o = self._normalize(tx.get("o"))
+            amt = int(tx.get("a",0))
+            state.setdefault(i,0)
+            state.setdefault(o,0)
+            if state[i] < amt:
+                continue
+            state[i] -= amt
+            state[o] += amt
+        self.STATE = [{"adr":a,"stt":b} for a,b in state.items()]
+        self.state_save()
+
+    def get_state_disc(self):
+        return {self._normalize(x["adr"]): int(x["stt"]) for x in self.STATE}

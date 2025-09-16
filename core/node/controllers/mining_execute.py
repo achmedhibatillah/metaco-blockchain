@@ -24,8 +24,10 @@ class ExecuteMining:
         prev_hash = blockchain[-1]["hash"] if blockchain else "0"*64
         
         block = {
-            "index": len(blockchain) + 1,
-            "prev_hash": prev_hash,
-            "timestamp": int(time.time())
+            "ix": len(blockchain) + 1,
+            "ph": prev_hash,
+            "ts": int(time.time()),
+            "nc": 0,
+            "tx": []
         }
         
